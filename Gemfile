@@ -6,6 +6,7 @@ gem 'sinatra'
 gem 'shotgun'
 gem 'capybara'
 gem 'database_cleaner'
+gem 'bcrypt-ruby'
 
 
 group :development, :test do 
