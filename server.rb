@@ -1,5 +1,8 @@
 require 'data_mapper'
 require 'sinatra'
+require 'rack-flash'
+
+use Rack::Flash
 
 env = ENV["RACK_ENV"] || "development"
 #we're telling datamapper to use a postgres dataabse on localhost. The name will be "bookmark_manager_test" or "bookmark_manager_development" depending on the enviroment
@@ -48,13 +51,23 @@ end
 
 get '/users/new' do 
 	#note the view is in views/users/new.rb we need the quotes because otherwise ruby would divide the symbol :users by the variable new (which makes no sense)
+	@user = User.new
 	erb :"users/new"
 end
 
 post '/users' do 
-	user = User.create(:email => params[:email], :password => params[:password], :password_confirmation => params[:password_confirmation])
-	session[:user_id] = user.id
-	redirect to ('/')
+	# we just initialized the object without saving it. It may be invalid
+	@user = User.create(:email => params[:email], :password => params[:password], :password_confirmation => params[:password_confirmation])
+	#lets try saving it. If the model is valid it will be saved
+	if @user.save
+		session[:user_id] = @user.id
+		redirect to ('/')
+		#it it's not valid, we'll show the same form again
+	else
+		flash[:notice] = "Sorry, your passwords don't match"
+		erb:"users/new"
+	#the user.id will be nil if the user wasnt saved because of the oassword missmatch
+	end
 end
 
 
