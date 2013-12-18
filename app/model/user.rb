@@ -4,7 +4,7 @@ class User
 	include DataMapper::Resource
 
 	property :id, Serial
-	property :email, String
+	property :email, String, :unique => true, :message => "This email is already taken"
 
 	#this will store both the password and the salt. Its the Text and no String because String holds 50 characters by default annd it's not enough for the hash and salt
 	property :password_digest, Text
