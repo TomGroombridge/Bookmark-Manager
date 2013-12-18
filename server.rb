@@ -64,7 +64,7 @@ post '/users' do
 		redirect to ('/')
 		#it it's not valid, we'll show the same form again
 	else
-		flash[:errors] = @user.errors.full_messages
+		flash.now[:errors] = @user.errors.full_messages
 		erb:"users/new"
 	#the user.id will be nil if the user wasnt saved because of the oassword missmatch
 	end
