@@ -4,10 +4,10 @@ ENV["RACK_ENV"] = 'test' #because we need to know what database to work with
 #Because the server needs to know what enviroment it's running it: test or development. 
 #The enviroment determines what database to use.
 
-require './server'
+require './app/server'
 require 'database_cleaner'
 require 'capybara/rspec'
-require 'sinatra'
+
 
 Capybara.app = Sinatra::Application
 

@@ -1,4 +1,7 @@
 require 'spec_helper'
+require_relative "./helpers/session"
+
+include SessionHelpers
 
 feature "User signs up" do 
 	#Strictly speaking, the tests that check the UI (have_content, etc.) should be seperated from the tests that check what we have in the DB. The reason is that you should test one thing at a time, whereas by mixing the two we're testing both the business logic and the views.
@@ -25,13 +28,7 @@ feature "User signs up" do
 		expect(page).to have_content("Password does not match the confirmation")
 	end
 
-	def sign_up(email = "alice@example.com", password = "oranges!", password_confirmation = "oranges!")
-		visit '/users/new'
-		fill_in :email, :with => email
-		fill_in :password, :with => password
-		fill_in :password_confirmation, :with => password_confirmation
-		click_button "Sign up"
-	end
+	
 end
 
 feature "USer signs in" do
@@ -56,16 +53,25 @@ scenario "with incorrect credentials" do
 	expect(page).not_to have_content("Welcome, test@test.com")
 end
 
-def sign_in(email, password)
-	visit "/sessions/new"
-	fill_in "email", :with => email
-	fill_in "password", :with => password
-	click_button 'Sign in'
-end
+
 
 end
 
+feature 'User signs out' do
 
+	before(:each) do
+		User.create(:email => "test@test.com",
+								:password => 'test',
+								:password_confirmation => 'test')
+	end	
+
+	scenario 'While being signed in' do
+		sign_in('test@test.com', 'test')
+		click_button "Sign out"
+		expect(page).to have_content("Good bye!") #where does this message go?
+		expect(page).not_to have_content("Welcome, test@test.com")
+	end
+end
 
 
 

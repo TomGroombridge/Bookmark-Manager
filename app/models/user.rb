@@ -16,7 +16,7 @@ class User
 
 	#this is datamapper's method of validadting the model. The model will not be saved unless both password and passowrd_confirmation are the same read more about it in the documentation
 	#http://datamapper.org/docs/validations.html
-	validates_confirmation_of :password
+	validates_confirmation_of :password, :message => "Password does not match the confirmation"
 
 	def password=(password)
 		@password = password
