@@ -1,4 +1,4 @@
-#remember env variables from week 1?
+  #remember env variables from week 1?
 ENV["RACK_ENV"] = 'test' #because we need to know what database to work with
 #This needs to be after ENV["RACK_ENV"] = 'test'
 #Because the server needs to know what enviroment it's running it: test or development. 

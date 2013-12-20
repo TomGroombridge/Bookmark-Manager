@@ -18,6 +18,7 @@ require_relative 'controllers/application'
 
 
 
+
 enable :sessions
 set :session_secret, 'super secret'
 use Rack::Flash
