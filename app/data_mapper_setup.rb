@@ -1,6 +1,8 @@
 env = ENV["RACK_ENV"] || "development"
 
-DataMapper.setup(:default, "postgres://localhost/bookmark_manager_#{env}")
+connection_string = ENV["DATABASE_URL"] || "postgres://localhost/bookmark_manager_#{env}"
+
+DataMapper.setup(:default, connection_string )
 
 DataMapper.finalize
 
