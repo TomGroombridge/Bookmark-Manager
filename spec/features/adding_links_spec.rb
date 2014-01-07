@@ -5,10 +5,10 @@ feature "adding a new link" do
 	scenario "without tags" do
 		expect(Link.count).to eq(0)
 		visit '/links/new'
-		add_link("https://makersacademy.com/", "Makers Academy")
+		add_link("http://makersacademy.com/", "Makers Academy")
 		expect(Link.count).to eq(1)
 		link = Link.first
-		expect(link.url).to eq("https://makersacademy.com/")
+		expect(link.url).to eq("http://makersacademy.com/")
 		expect(link.title).to eq("Makers Academy")
 	end
 
@@ -25,7 +25,7 @@ feature "adding a new link" do
 			fill_in 'url', :with => url
 			fill_in 'title', :with => title
 			# our tags will be sapce seperated
-			fill_in 'tags', :with =>tags.join(' ')
+			fill_in 'tags', :with => tags.join(' ')
 			click_button 'Add link'
 		end
 	end
